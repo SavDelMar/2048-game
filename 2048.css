@@ -1,0 +1,65 @@
+* {
+ margin: 0;
+ padding: 0;
+}
+
+form, h1, p {
+    margin: 30px;
+}
+.best-score {
+    margin-left: 30px;
+}
+
+#game-field {
+    position: relative;
+    margin: 30px;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 248px;
+    height: 100%;
+    border: 2px solid darkblue;
+    background-color: rgb(219, 219, 232);
+}
+
+.new-game {
+    margin-left: 30px;
+}
+
+.cell {
+    border: 1px dotted rgb(79, 45, 235);
+    width: 60px;
+    height: 60px;
+}
+
+@keyframes show{
+    0%{
+        transform: scale(0.3);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+
+.red-cell {
+    position: absolute;
+    top: 67px;
+    left: 67px;
+    padding-top: 5px;
+    font-size: 40px;
+    color:rgb(219, 219, 232);
+    border: 1px dotted rgb(46, 43, 43);
+    background-color: rgb(237, 167, 114);
+    width: 60px;
+    height: 55px;
+    text-align: center;
+    transition: 1s; /*Скорость перехода состояния элемента*/
+    animation: show 0.4s 1; /* Указываем название анимации, её время и количество повторов*/
+    animation-fill-mode: forwards; /* Чтобы элемент оставался в конечном состоянии анимации */
+}
+
+
+
