@@ -392,12 +392,13 @@ document.addEventListener('keydown', function (evt) {
                     redCellLine[i].id = allLines[l][i].id;
                     redCellLine[i].style.top = allLines[l][i].top + 'px';
                     redCellLine[i].style.left = allLines[l][i].left + 'px';
-                    redCellLine[i].textContent = allLines[l][i].number;
+                    
                     cellColorChange(redCellLine[i], allLines[l][i].number);
                     if (allLines[l][i].number > prevNum) {
-
+                        
                         redCellLine[i].style.animation = '';
                         setTimeout(function () {
+                            redCellLine[i].textContent = allLines[l][i].number;
                             redCellLine[i].style.animation = 'show-big 0.5s 1';
                         }, 250);
                     }

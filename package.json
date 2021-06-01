@@ -1,0 +1,23 @@
+{
+  "name": "2048game",
+  "version": "1.0.0",
+  "description": "best time-killer ever",
+  "main": "2048.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SavDelMar/2048-game.git"
+  },
+  "keywords": [
+    "js",
+    "game"
+  ],
+  "author": "Maria Savkina <marsavkina555@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SavDelMar/2048-game/issues"
+  },
+  "homepage": "https://github.com/SavDelMar/2048-game#readme"
+}
