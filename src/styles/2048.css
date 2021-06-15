@@ -27,7 +27,7 @@ form, h1, p {
     width: 248px;
     height: 100%;
     border: 2px solid darkblue;
-    background-color: rgb(219, 219, 232);
+    background-color: rgb(224, 224, 233);
 }
 
 .new-game {
@@ -90,9 +90,9 @@ form, h1, p {
     color:rgb(219, 219, 232);
     border: 1px dotted rgb(46, 43, 43);
     border-radius: 6px;
-    background-color: rgb(237, 167, 114);
+    background-color: rgb(247, 6, 6);
     width: 60px;
-    height: 60px;
+    height: 6 0px;
     line-height: 60px;
     text-align: center;
     transition: 1s; /*Скорость перехода состояния элемента*/

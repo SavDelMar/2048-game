@@ -53,7 +53,13 @@ currentScore.textContent = ' ' + score;
 
 //СОздание начальных рандомных игровых ячеек
 createNewRedCell(numbers[Math.floor(Math.random() * numbers.length)], freeCells[Math.floor(Math.random() * freeCells.length)]);
+freeCells = cellsData.filter(cell => cell.isFree == true);
+redCells = Array.from(document.querySelectorAll('.red-cell'));
+console.log(redCells, cellsData);
 createNewRedCell(numbers[Math.floor(Math.random() * numbers.length)], freeCells[Math.floor(Math.random() * freeCells.length)]);
+freeCells = cellsData.filter(cell => cell.isFree == true);
+redCells = Array.from(document.querySelectorAll('.red-cell'));
+console.log(redCells, cellsData);
 
 //Функционал Кнопки Новая игра
 newGameButton.addEventListener('click', function () {
@@ -64,7 +70,6 @@ newGameButton.addEventListener('click', function () {
         cellsData[redCells[i].id].isFree = true;
     }
     cleanField(redCells);
-    console.log(freeCells)
     freeCells = cellsData.filter(cell => cell.isFree == true);
     createNewRedCell(numbers[Math.floor(Math.random() * numbers.length)], freeCells[Math.floor(Math.random() * freeCells.length)]);
     freeCells = cellsData.filter(cell => cell.isFree == true);
@@ -81,7 +86,6 @@ document.addEventListener('keydown', function (evt) {
     for ( let i = 0; i < freeCells.length; i++) { //создаем массив начальных игровых ячеек
         prevRedCells.push(freeCells[i].id);
     }
-    console.log(prevRedCells);
 
     if (evt.key === 'i') {
         for (let l = 0; l < allLines.length; l++) {
@@ -99,7 +103,6 @@ document.addEventListener('keydown', function (evt) {
                     
                     cellColorChange(redCellLine[i], allLines[l][i].number);
                     if (allLines[l][i].number > prevNum) {
-                        
                         redCellLine[i].style.animation = '';
                         setTimeout(function () {
                             redCellLine[i].textContent = allLines[l][i].number;
@@ -123,9 +126,8 @@ document.addEventListener('keydown', function (evt) {
             }
         }
 
-        updateALLData();
-    }
-    if (evt.key === 'p') {
+           }
+    else if (evt.key === 'p') {
         for (let l = 0; l < allLines.length; l++) {
             allLines[l] = shiftRight(allLines[l], l);
             let redCellLine = redCells.filter(cell => (cell.id < 4 * (l + 1) && cell.id >= 4 * l));
@@ -163,10 +165,10 @@ document.addEventListener('keydown', function (evt) {
                 cellsData[i + 4 * l] = allLines[l][i]
             }
         }
-        updateALLData();
+        console.log('Занятые ячейки' + redCells, 'Все поле' + cellsData);
     }
 
-    if (evt.key === 'o') {
+    else if (evt.key === 'o') {
         for (let l = 0; l < allColumns.length; l++) {
             allColumns[l] = shiftUp(allColumns[l], l);
             let redCellColumn = redCells.filter(cell => (cell.id % 4 == l));
@@ -192,11 +194,9 @@ document.addEventListener('keydown', function (evt) {
                 cellsData[i * 4 + l] = allColumns[l][i];
             }
         }
-        updateALLData();
     }
-    if (evt.key === 'l') {
+    else if (evt.key === 'l') {
         for (let l = 0; l < allColumns.length; l++) {
-            
             allColumns[l] = shiftDown(allColumns[l], l);
             let redCellColumn = redCells.filter(cell => (cell.id % 4 == l));
             redCellColumn = redCellColumn.sort((a, b) => parseInt(a.id) > parseInt(b.id) ? 1 : -1);
@@ -227,7 +227,6 @@ document.addEventListener('keydown', function (evt) {
         }
        
     }
-    
     updateALLData();
     
     newRedCells = [];
@@ -262,14 +261,14 @@ document.addEventListener('keydown', function (evt) {
         }, 400)
     }
     
-    setTimeout(()=>{
+    /*setTimeout(()=>{
         updateALLData();
         console.log('Свободные ячейки:', freeCells);
         if (!freeCells && isEqual) {
             document.querySelector('.game-over').style.display = 'block';
         }
     }, 500)
-    
+    */
 
 })
 

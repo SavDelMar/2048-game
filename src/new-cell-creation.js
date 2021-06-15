@@ -54,5 +54,6 @@ let createNewRedCell = function (textNumber, current) {
    /* freeCells = cellsData.filter(cell => cell.isFree == true);
     redCells = Array.from(document.querySelectorAll('.red-cell'));*/
     console.log(newRedCell.id);
+    
 }
 export {createNewRedCell, cellColorChange};
