@@ -1,8 +1,8 @@
 import './styles/2048.css';
-import {cleanField} from './restart-game2048';
+import { cleanField } from './restart-game2048';
 import { shift, shiftDown, shiftRight, shiftUp, score } from './shifts';
 import { createNewRedCell, cellColorChange } from './new-cell-creation';
-import {cellsData} from './state';
+import { cellsData } from './state';
 
 //Маасив заполненных ячеек
 let redCells = Array.from(document.querySelectorAll('.red-cell'));
@@ -13,7 +13,7 @@ let freeCells = cellsData.filter(cell => cell.isFree == true);
 let newGameButton = document.querySelector('.new-game');
 
 //Массив для рандомного выбора номинала новой ячейки
-let numbers = [2, 2, 2, 2, 2, 2, 2, 2, 2, 4];
+let numbers = [2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 1024];
 
 //Переменные для проверки изменения состояния поля
 let prevRedCells = [];
@@ -35,6 +35,7 @@ let allColumns = [firstColumn, secondColumn, thirdColumn, fourthColumn];
 //Обновление всех данных
 let updateALLData = function () {
     freeCells = cellsData.filter(cell => cell.isFree == true);
+    redCells = Array.from(document.querySelectorAll('.red-cell'));
     firstLine = cellsData.filter(cell => cell.id < 4);
     secondLine = cellsData.filter(cell => (cell.id >= 4 && cell.id < 8));
     thirdLine = cellsData.filter(cell => (cell.id >= 8 && cell.id < 12));
@@ -51,15 +52,13 @@ let updateALLData = function () {
 let currentScore = document.getElementById('current-score');
 currentScore.textContent = ' ' + score;
 
-//СОздание начальных рандомных игровых ячеек
+//Создание начальных рандомных игровых ячеек
 createNewRedCell(numbers[Math.floor(Math.random() * numbers.length)], freeCells[Math.floor(Math.random() * freeCells.length)]);
 freeCells = cellsData.filter(cell => cell.isFree == true);
 redCells = Array.from(document.querySelectorAll('.red-cell'));
-console.log(redCells, cellsData);
 createNewRedCell(numbers[Math.floor(Math.random() * numbers.length)], freeCells[Math.floor(Math.random() * freeCells.length)]);
 freeCells = cellsData.filter(cell => cell.isFree == true);
 redCells = Array.from(document.querySelectorAll('.red-cell'));
-console.log(redCells, cellsData);
 
 //Функционал Кнопки Новая игра
 newGameButton.addEventListener('click', function () {
@@ -69,7 +68,7 @@ newGameButton.addEventListener('click', function () {
         cellsData[redCells[i].id].number = '';
         cellsData[redCells[i].id].isFree = true;
     }
-    cleanField(redCells);
+    cleanField(redCells); //удаляем все игровые ячейкм
     freeCells = cellsData.filter(cell => cell.isFree == true);
     createNewRedCell(numbers[Math.floor(Math.random() * numbers.length)], freeCells[Math.floor(Math.random() * freeCells.length)]);
     freeCells = cellsData.filter(cell => cell.isFree == true);
@@ -79,11 +78,15 @@ newGameButton.addEventListener('click', function () {
     redCells = Array.from(document.querySelectorAll('.red-cell'));
 
 })
+//Функционал Кнопки Продолжить 
+document.querySelector('.continue-button').addEventListener('click', function () {
+    document.querySelector('.game-win').style.display = 'none';
+})
 
 //Игровой механизм
 document.addEventListener('keydown', function (evt) {
     prevRedCells = [];
-    for ( let i = 0; i < freeCells.length; i++) { //создаем массив начальных игровых ячеек
+    for (let i = 0; i < freeCells.length; i++) { //создаем массив начальных игровых ячеек
         prevRedCells.push(freeCells[i].id);
     }
 
@@ -96,27 +99,22 @@ document.addEventListener('keydown', function (evt) {
             for (let i = 0; i < redCellLine.length; i++) {
                 if (allLines[l][i].number !== '') {
                     let prevNum = redCellLine[i].textContent;
-                    redCellLine[i].style.transition = '0.3s';
+                    redCellLine[i].style.transition = '0.9s';
                     redCellLine[i].id = allLines[l][i].id;
                     redCellLine[i].style.top = allLines[l][i].top + 'px';
                     redCellLine[i].style.left = allLines[l][i].left + 'px';
-                    
                     cellColorChange(redCellLine[i], allLines[l][i].number);
+                    redCellLine[i].textContent = allLines[l][i].number;
                     if (allLines[l][i].number > prevNum) {
                         redCellLine[i].style.animation = '';
-                        setTimeout(function () {
-                            redCellLine[i].textContent = allLines[l][i].number;
-                            redCellLine[i].style.animation = 'show-big 0.5s 1';
-                        }, 250);
-                    }
+                        redCellLine[i].style.animation = 'show-big 0.5s 1';
+                    } 
                 } else {
-                    redCellLine[i].style.transition = '0.3s';
+                    redCellLine[i].style.transition = '0.9s';
                     redCellLine[i].id = allLines[l][i].id;
                     redCellLine[i].style.top = allLines[l][i].top + 'px';
                     redCellLine[i].style.left = allLines[l][i].left + 'px';
-                    redCellLine[i].style.top = redCellLine[i].style.top + 20 + 'px';
-                    redCellLine[i].style.left = redCellLine[i].style.left + 20 + 'px';
-                    setTimeout(function () { redCellLine[i].remove() }, 300);
+                    redCellLine[i].remove();
                 }
             }
             redCells = Array.from(document.querySelectorAll('.red-cell'));
@@ -126,8 +124,7 @@ document.addEventListener('keydown', function (evt) {
             }
         }
 
-           }
-    else if (evt.key === 'p') {
+    } else if (evt.key === 'p') {
         for (let l = 0; l < allLines.length; l++) {
             allLines[l] = shiftRight(allLines[l], l);
             let redCellLine = redCells.filter(cell => (cell.id < 4 * (l + 1) && cell.id >= 4 * l));
@@ -137,27 +134,24 @@ document.addEventListener('keydown', function (evt) {
                 let len = allLines[l].length - 1 - k;
                 if (allLines[l][len].number !== '') {
                     let prevNum = redCellLine[i].textContent;
-                    redCellLine[i].style.transition = '0.3s';
+                    redCellLine[i].style.transition = '0.9s';
                     redCellLine[i].id = allLines[l][len].id;
                     redCellLine[i].style.top = allLines[l][len].top + 'px';
                     redCellLine[i].style.left = allLines[l][len].left + 'px';
                     redCellLine[i].textContent = allLines[l][len].number;
                     cellColorChange(redCellLine[i], allLines[l][len].number);
-                    if (allLines[l][len].number > prevNum) {
-
+                    if (allLines[l][len].number !== prevNum) {
                         redCellLine[i].style.animation = '';
-                        setTimeout(function () {
-                            redCellLine[i].textContent = allLines[l][len].number;
-                            redCellLine[i].style.animation = 'show-big 0.5s 1';
-                        }, 250);
+                        redCellLine[i].textContent = allLines[l][len].number;
+                        redCellLine[i].style.animation = 'show-big 0.5s 1';
                     }
                     k++;
                 } else {
-                    redCellLine[i].style.transition = '0.3s';
+                    redCellLine[i].style.transition = '0.9s';
                     redCellLine[i].id = allLines[l][len].id;
                     redCellLine[i].style.top = allLines[l][len + 1].top + 'px';
                     redCellLine[i].style.left = allLines[l][len + 1].left + 'px';
-                    setTimeout(function () { redCellLine[i].remove() }, 200);
+                    redCellLine[i].remove();
                 }
             }
             redCells = Array.from(document.querySelectorAll('.red-cell'));
@@ -165,28 +159,32 @@ document.addEventListener('keydown', function (evt) {
                 cellsData[i + 4 * l] = allLines[l][i]
             }
         }
-        console.log('Занятые ячейки' + redCells, 'Все поле' + cellsData);
-    }
-
-    else if (evt.key === 'o') {
+        
+    } else if (evt.key === 'o') {
         for (let l = 0; l < allColumns.length; l++) {
             allColumns[l] = shiftUp(allColumns[l], l);
             let redCellColumn = redCells.filter(cell => (cell.id % 4 == l));
             redCellColumn = redCellColumn.sort((a, b) => parseInt(a.id) > parseInt(b.id) ? 1 : -1);
             for (let i = 0; i < redCellColumn.length; i++) {
                 if (allColumns[l][i].number !== '') {
-                    redCellColumn[i].style.transition = '0.3s';
+                    let prevNum = redCellColumn[i].textContent;
+                    redCellColumn[i].style.transition = '0.9s';
                     redCellColumn[i].id = allColumns[l][i].id;
                     redCellColumn[i].style.top = allColumns[l][i].top + 'px';
                     redCellColumn[i].style.left = allColumns[l][i].left + 'px';
                     redCellColumn[i].textContent = allColumns[l][i].number;
                     cellColorChange(redCellColumn[i], allColumns[l][i].number);
+                    if (allColumns[l][i].number !== prevNum) {
+                        redCellColumn[i].style.animation = 'show-big 0.5s 1';
+                        redCellColumn[i].textContent = allColumns[l][i].number;
+                        
+                    }
                 } else {
-                    redCellColumn[i].style.transition = '0.2s';
+                    redCellColumn[i].style.transition = '0.9s';
                     redCellColumn[i].id = allColumns[l][i].id;
                     redCellColumn[i].style.top = allColumns[l][i].top + 'px';
                     redCellColumn[i].style.left = allColumns[l][i].left + 'px';
-                    setTimeout(function () { redCellColumn[i].remove() }, 100);
+                    redCellColumn[i].remove();
                 }
             }
             redCells = Array.from(document.querySelectorAll('.red-cell'));
@@ -194,8 +192,7 @@ document.addEventListener('keydown', function (evt) {
                 cellsData[i * 4 + l] = allColumns[l][i];
             }
         }
-    }
-    else if (evt.key === 'l') {
+    } else if (evt.key === 'l') {
         for (let l = 0; l < allColumns.length; l++) {
             allColumns[l] = shiftDown(allColumns[l], l);
             let redCellColumn = redCells.filter(cell => (cell.id % 4 == l));
@@ -204,42 +201,48 @@ document.addEventListener('keydown', function (evt) {
             for (let i = redCellColumn.length - 1; i >= 0; i--) {
                 let len = allColumns[l].length - 1 - k;
                 if (allColumns[l][len].number !== '') {
-                    redCellColumn[i].style.transition = '0.3s';
+                    let prevNum = redCellColumn[i].textContent;
+                    redCellColumn[i].style.transition = '0.9s';
                     redCellColumn[i].id = allColumns[l][len].id;
                     redCellColumn[i].style.top = allColumns[l][len].top + 'px';
                     redCellColumn[i].style.left = allColumns[l][len].left + 'px';
                     redCellColumn[i].textContent = allColumns[l][len].number;
                     cellColorChange(redCellColumn[i], allColumns[l][len].number);
                     k++;
+                    if (allColumns[l][len].number !== prevNum) {
+                        redCellColumn[i].style.animation = '';
+                        redCellColumn[i].textContent = allColumns[l][len].number;
+                        redCellColumn[i].style.animation = 'show-big 0.5s 1';
+                    }
                 } else {
-                    redCellColumn[i].style.transition = '0.2s';
+                    redCellColumn[i].style.transition = '0.9s';
                     redCellColumn[i].id = allColumns[l][len].id;
                     redCellColumn[i].style.top = allColumns[l][len].top + 'px';
                     redCellColumn[i].style.left = allColumns[l][len].left + 'px';
-                    setTimeout(function () { redCellColumn[i].remove() }, 100);
+                    redCellColumn[i].remove();
                 }
             }
             redCells = Array.from(document.querySelectorAll('.red-cell'));
             for (let i = 0; i < allColumns[l].length; i++) {
                 cellsData[i * 4 + l] = allColumns[l][i];
             }
-            
+
         }
-       
+
     }
     updateALLData();
-    
+
     newRedCells = [];
     for (let i = 0; i < freeCells.length; i++) {  //создаем массив конечных игровых ячеек
         newRedCells.push(freeCells[i].id);
     }
-    console.log(newRedCells)
+    console.log(newRedCells);
 
     //Сравнение состояний поля ДО и ПОСЛЕ
     if (newRedCells.length == prevRedCells.length) {
         isEqual = false
         let i = 0;
-        while (newRedCells[i] == prevRedCells[i] && i<newRedCells.length) {
+        while (newRedCells[i] == prevRedCells[i] && i < newRedCells.length) {
             isEqual = isEqual + true;
             i++
         }
@@ -249,18 +252,22 @@ document.addEventListener('keydown', function (evt) {
     } else {
         isEqual = false
     }
-    
-    console.log(isEqual);
 
+    console.log(isEqual);
+    console.log('Занятые ячейки' + redCells, 'free' + freeCells);
     currentScore.textContent = ' ' + score;
+
     //Если состояние поля изменилось - создаем новую рандомную ячейку
-    
     if (!isEqual) {
-        setTimeout(function () {
+        setTimeout(()=>{
             createNewRedCell(numbers[Math.floor(Math.random() * numbers.length)], freeCells[Math.floor(Math.random() * freeCells.length)]);
-        }, 400)
+            updateALLData();
+        }, 700)
+        
+
     }
     
+    console.log('Занятые ячейки' + redCells, 'free' + freeCells);
     /*setTimeout(()=>{
         updateALLData();
         console.log('Свободные ячейки:', freeCells);
@@ -272,4 +279,4 @@ document.addEventListener('keydown', function (evt) {
 
 })
 
-export {freeCells, redCells};
+export { freeCells, redCells };
