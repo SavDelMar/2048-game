@@ -1,6 +1,4 @@
 //Создание новой игровой ячейки
-import { cellsData } from './state';
-import {freeCells, redCells} from './2048';
 let gameField = document.getElementById('game-field');
 let redCellTemplate = document.querySelector('#red-cell-template').content;
 let newRedCellTemplate = redCellTemplate.querySelector('.red-cell');
@@ -41,7 +39,6 @@ let cellColorChange = function (cell, textNumber) {
     } else if (textNumber == 2048) {
         cell.style.backgroundColor = 'rgb(150, 170, 5)';
         cell.style.fontSize = '20px';
-        document.querySelector('.game-win').style.display = 'block';
     }
 }
 
@@ -58,8 +55,6 @@ let createNewRedCell = function (textNumber, current) {
     currentCell.number = newRedCell.textContent;
     cellColorChange(newRedCell, textNumber);
     gameField.appendChild(newRedCell);
-   /* freeCells = cellsData.filter(cell => cell.isFree == true);
-    redCells = Array.from(document.querySelectorAll('.red-cell'));*/
     console.log(newRedCell.id);
 
 }

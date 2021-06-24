@@ -26,19 +26,19 @@ form, h1, p {
     justify-content: space-around;
     width: 248px;
     height: 100%;
-    border: 2px solid darkblue;
-    background-color: rgb(224, 224, 233);
+    border: 2px solid rgb(58, 58, 75);
+    background-color: rgb(98, 91, 128);
 }
 .continue-button {
     font-size: 15px;
     padding: 5px;
     border-radius: 5px;
 }
-.new-game {
+.new-game, .return {
     margin-left: 30px;
 }
 
-.game-over, .game-win {
+.game-over, .game-win  {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -47,7 +47,7 @@ form, h1, p {
     height: 198px;
     font-size: 50px;
     text-align: center;
-    color:rgb(252, 252, 252);
+    color: rgb(252, 252, 252);
     border-radius: 6px;
     background-color: rgba(218, 185, 160, 0.7);
     display: none;
@@ -59,7 +59,8 @@ form, h1, p {
 }
 
 .cell {
-    border: 1px solid rgb(79, 45, 235);
+    border: 1px solid rgb(98, 91, 128);
+    background-color: rgb(224, 224, 233);
     border-radius: 5px;
     width: 60px;
     height: 60px;
@@ -95,7 +96,7 @@ form, h1, p {
     padding-top: 0px;
     font-size: 40px;
     color:rgb(219, 219, 232);
-    border: 1px solid rgb(79, 45, 235);
+    border: 1px solid rgb(98, 91, 128);
     border-radius: 6px;
     background-color: rgb(247, 6, 6);
     width: 60px;
