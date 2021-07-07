@@ -1,10 +1,10 @@
-import {gameDrive} from './2048';
+import { gameDrive } from './2048';
 // мобильная версия упрвления свайпами
 let xStart = 0;
 let yStart = 0;
 let direction = '';
 
-let touchStartHandler = function(e) {
+let touchStartHandler = function (e) {
     xStart = e.touches[0].clientX;
     yStart = e.touches[0].clientY;
 };
@@ -17,7 +17,7 @@ let touchMoveHandler = function (e) {
             direction = 'r';
         } else {
             direction = 'l';
-            
+
         }
     } else {
         if (yMove - yStart > 0) {
@@ -27,9 +27,9 @@ let touchMoveHandler = function (e) {
         }
     }
     setTimeout(
-       gameDrive(direction)
-    , 500);
+        gameDrive(direction)
+    , 500)
 };
 
-export { touchStartHandler, touchMoveHandler};
+export { touchStartHandler, touchMoveHandler };
 

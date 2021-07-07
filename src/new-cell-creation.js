@@ -39,6 +39,15 @@ let cellColorChange = function (cell, textNumber) {
     } else if (textNumber == 2048) {
         cell.style.backgroundColor = 'rgb(150, 170, 5)';
         cell.style.fontSize = '20px';
+    } else if (textNumber == 4096) {
+        cell.style.backgroundColor = 'rgb(170, 170, 5)';
+        cell.style.fontSize = '20px';
+    } else if (textNumber == 8192) {
+        cell.style.backgroundColor = 'rgb(190, 170, 5)';
+        cell.style.fontSize = '20px';
+    } else if (textNumber == 16384) {
+        cell.style.backgroundColor = 'rgb(210, 170, 5)';
+        cell.style.fontSize = '15px';
     }
 }
 

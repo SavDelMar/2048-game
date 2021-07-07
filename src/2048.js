@@ -12,24 +12,19 @@ let gameDrive;
 
 let isMinGoal = 1;
 
-
-
-
 //массив свободных ячеек
 let freeCells = cellsData.filter(cell => cell.isFree == true);
 
 let newGameButton = document.querySelector('.new-game');
 
 //Массив для рандомного выбора номинала новой ячейки
-let numbers = [2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 1024, 1024, 1024, 1024, 1024, 1024];
+let numbers = [2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 8];
 
 //Переменные для проверки изменения состояния поля
 let prevRedCellsValues = [];
 let prevRedCells = [];
 let newRedCells = [];
 let isEqual = false;
-
-
 
 //Разбиваю  поле на линии и столбцы
 let firstLine = cellsData.filter(cell => cell.id < 4);
@@ -59,10 +54,12 @@ let updateALLData = function () {
     allColumns = [firstColumn, secondColumn, thirdColumn, fourthColumn];
 }
 
-//Счет
+//Счет и шаги
 let currentScore = document.getElementById('current-score');
 currentScore.textContent = ' ' + score;
-
+let stepsTotal = document.getElementById('steps');
+let steps = 0;
+stepsTotal.textContent = ' ' + steps;
 //Создание начальных рандомных игровых ячеек
 createNewRedCell(numbers[Math.floor(Math.random() * numbers.length)], freeCells[Math.floor(Math.random() * freeCells.length)]);
 freeCells = cellsData.filter(cell => cell.isFree == true);
@@ -100,11 +97,18 @@ document.querySelector('.return').addEventListener('click', function () {
     document.querySelector('.game-win').style.display = 'none';
     document.querySelector('.game-over').style.display = 'none';
     console.log(prevRedCells, prevRedCellsValues);
+    redCells = Array.from(document.querySelectorAll('.red-cell'));
+    for (let i = 0; i < redCells.length; i++) {      //очищаем state
+        cellsData[redCells[i].id].number = '';
+        cellsData[redCells[i].id].isFree = true;
+    }
     cleanField(redCells);
+    updateALLData();
     for (let i = 0; i < prevRedCells.length; i++) {
         createNewRedCell(prevRedCellsValues[i], cellsData[prevRedCells[i]])
     }
     updateALLData();
+    console.log(redCells, cellsData, freeCells)
 })
 
 
@@ -122,6 +126,11 @@ gameDrive = function (direction) {
     for (let i = 0; i < freeCells.length; i++) { //создаем массив начальных игровых ячеек
         prevRedCells.push(freeCells[i].id);
     }
+    prevRedCellsValues = [];
+    for (let i = 0; i < redCells.length; i++) { //создаем массив начальных игровых ячеек
+        prevRedCellsValues.push(redCells[i].textContent);
+    }
+
     if (direction == 'l') {
         for (let l = 0; l < allLines.length; l++) {
             allLines[l] = shift(allLines[l], l);
@@ -297,10 +306,16 @@ gameDrive = function (direction) {
 
 
     }
+    for (let i = 0; i < redCells.length; i++) {
+        if (redCells[i].textContent == 2048 && isMinGoal == 1) {
+            isMinGoal++;
+            document.querySelector('.game-win').style.display = 'block';
+        }
+    }
 
 }
 
-// DESKTOP
+// PC
 
 document.addEventListener('keydown', function (evt) {
     prevRedCells = [];
@@ -327,7 +342,7 @@ document.addEventListener('keydown', function (evt) {
                     redCellLine[i].style.left = allLines[l][i].left + 'px';
                     cellColorChange(redCellLine[i], allLines[l][i].number);
                     redCellLine[i].textContent = allLines[l][i].number;
-                    if (allLines[l][i].number > prevNum) {
+                    if (allLines[l][i].number !== prevNum ) {
                         redCellLine[i].style.animation = '';
                         redCellLine[i].style.animation = 'show-big 0.5s 1';
                     }
@@ -453,6 +468,7 @@ document.addEventListener('keydown', function (evt) {
 
     }
     updateALLData();
+    console.log(redCells, cellsData, freeCells)
 
     newRedCells = [];
     for (let i = 0; i < redCells.length; i++) {  //создаем массив конечных игровых ячеек
@@ -476,16 +492,19 @@ document.addEventListener('keydown', function (evt) {
 
     console.log(isEqual, prevRedCells, newRedCells);
     currentScore.textContent = ' ' + score;
+    steps++;
+    stepsTotal.textContent = ' ' + steps;
 
     //Если состояние поля изменилось - создаем новую рандомную ячейку
     if (!isEqual) {
         setTimeout(() => {
             createNewRedCell(numbers[Math.floor(Math.random() * numbers.length)], freeCells[Math.floor(Math.random() * freeCells.length)]);
             updateALLData();
+
+            console.log(redCells, cellsData, freeCells)
         }, 300)
-
-
     }
+
     for( let i = 0; i<redCells.length; i++ ) {
         if (redCells[i].textContent == 2048 && isMinGoal == 1) {
             isMinGoal++;
