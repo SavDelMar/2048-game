@@ -1,24 +1,35 @@
 import './styles/2048.css';
 import { cleanField } from './restart-game2048';
-import { shift, shiftDown, shiftRight, shiftUp, score } from './shifts';
+import { shift, score } from './shifts';
 import { createNewRedCell, cellColorChange } from './new-cell-creation';
 import { cellsData } from './state';
-import {touchStartHandler, touchMoveHandler} from './mobile-events.js';
+import { touchStartHandler, touchMoveHandler, touchEndHandler} from './mobile-events.js';
 
-//Маасив заполненных ячеек
+//Маcсив заполненных ячеек
 let redCells = Array.from(document.querySelectorAll('.red-cell'));
 
 let gameDrive;
 
-let isMinGoal = 1;
+let isMinGoal = false;   //???????????????????????????????7777
 
 //массив свободных ячеек
-let freeCells = cellsData.filter(cell => cell.isFree == true);
+
+
+let freeCells = [];
+let createFreeCellsArray = function(cellsData) {
+    for(let i = 0; i < cellsData.length; i++){
+        if (cellsData[i] == 0) {
+            freeCells.push[({id: i, isFree: true})]
+        }
+    }
+    return freeCells;
+}
+createFreeCellsArray(cellsData);
 
 let newGameButton = document.querySelector('.new-game');
 
 //Массив для рандомного выбора номинала новой ячейки
-let numbers = [2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 8];
+let numbers = [2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 8, 1024, 1024, 1024, 1024];
 
 //Переменные для проверки изменения состояния поля
 let prevRedCellsValues = [];
@@ -26,17 +37,7 @@ let prevRedCells = [];
 let newRedCells = [];
 let isEqual = false;
 
-//Разбиваю  поле на линии и столбцы
-let firstLine = cellsData.filter(cell => cell.id < 4);
-let secondLine = cellsData.filter(cell => (cell.id >= 4 && cell.id < 8));
-let thirdLine = cellsData.filter(cell => (cell.id >= 8 && cell.id < 12));
-let fourthLine = cellsData.filter(cell => (cell.id >= 12 && cell.id <= 15));
-let allLines = [firstLine, secondLine, thirdLine, fourthLine];
-let firstColumn = cellsData.filter(cell => cell.id % 4 == 0);
-let secondColumn = cellsData.filter(cell => (cell.id % 4 == 1));
-let thirdColumn = cellsData.filter(cell => (cell.id % 4 == 2));
-let fourthColumn = cellsData.filter(cell => (cell.id % 4 == 3));
-let allColumns = [firstColumn, secondColumn, thirdColumn, fourthColumn];
+ 
 
 //Обновление всех данных
 let updateALLData = function () {
@@ -73,7 +74,7 @@ newGameButton.addEventListener('click', function () {
     document.querySelector('.game-over').style.display = 'none';
     redCells = Array.from(document.querySelectorAll('.red-cell'));
     for (let i = 0; i < redCells.length; i++) {      //очищаем state
-        cellsData[redCells[i].id].number = '';
+        cellsData[redCells[i].id] = 0;
         cellsData[redCells[i].id].isFree = true;
     }
     cleanField(redCells); //удаляем все игровые ячейкм
@@ -84,7 +85,7 @@ newGameButton.addEventListener('click', function () {
     createNewRedCell(numbers[Math.floor(Math.random() * numbers.length)], freeCells[Math.floor(Math.random() * freeCells.length)]);
     freeCells = cellsData.filter(cell => cell.isFree == true);
     redCells = Array.from(document.querySelectorAll('.red-cell'));
-    isMinGoal = 0;
+    isMinGoal = false;
 
 })
 
@@ -120,6 +121,7 @@ document.querySelector('.return').addEventListener('click', function () {
 let field = document.getElementById('game-field');
 field.addEventListener('touchstart', touchStartHandler);
 field.addEventListener('touchmove', touchMoveHandler);
+field.addEventListener('touchend', touchEndHandler);
 
 gameDrive = function (direction) {
     prevRedCells = [];
@@ -175,7 +177,7 @@ gameDrive = function (direction) {
                 let len = allLines[l].length - 1 - k;
                 if (allLines[l][len].number !== '') {
                     let prevNum = redCellLine[i].textContent;
-                    redCellLine[i].style.transition = '0.9s';
+                    redCellLine[i].style.transition = '0.4s';
                     redCellLine[i].id = allLines[l][len].id;
                     redCellLine[i].style.top = allLines[l][len].top + 'px';
                     redCellLine[i].style.left = allLines[l][len].left + 'px';
@@ -327,7 +329,7 @@ document.addEventListener('keydown', function (evt) {
         prevRedCellsValues.push(redCells[i].textContent);
     }
 
-    if (evt.key === 'i') {
+    if (evt.key === 'i' ) {
         for (let l = 0; l < allLines.length; l++) {
             allLines[l] = shift(allLines[l], l);
             let redCellLine = redCells.filter(cell => (cell.id < 4 * (l + 1) && cell.id >= 4 * l));

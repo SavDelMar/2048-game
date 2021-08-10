@@ -1,7 +1,9 @@
 import { gameDrive } from './2048';
-// мобильная версия упрвления свайпами
+// мобильная версия упрaвления свайпами
 let xStart = 0;
 let yStart = 0;
+let xMove = 0;
+let yMove = 0;
 let direction = '';
 
 let touchStartHandler = function (e) {
@@ -10,8 +12,13 @@ let touchStartHandler = function (e) {
 };
 
 let touchMoveHandler = function (e) {
-    let xMove = e.changedTouches[0].clientX;
-    let yMove = e.changedTouches[0].clientY;
+    xMove = e.changedTouches[0].clientX;
+    yMove = e.changedTouches[0].clientY;
+    
+};
+
+let touchEndHandler = function (e) {
+    
     if (Math.abs(xMove - xStart) > Math.abs(yMove - yStart)) {
         if (xMove - xStart > 0) {
             direction = 'r';
@@ -26,10 +33,8 @@ let touchMoveHandler = function (e) {
             direction = 'u';
         }
     }
-    setTimeout(
         gameDrive(direction)
-    , 500)
+   
 };
-
-export { touchStartHandler, touchMoveHandler };
+export { touchStartHandler, touchMoveHandler, touchEndHandler };
 

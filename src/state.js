@@ -1,116 +1,39 @@
 //Исходное поле
-let cellsData = [
-    {
-        top: 5,
-        left: 5,
-        id: 0,
-        isFree: true,
-        number: ''
-    },
-    {
-        top: 5,
-        left: 67,
-        id: 1,
-        isFree: true,
-        number: ''
-    },
-    {
-        top: 5,
-        left: 129,
-        id: 2,
-        isFree: true,
-        number: ''
-    },
-    {
-        top: 5,
-        left: 191,
-        id: 3,
-        isFree: true,
-        number: ''
-    },
-    {
-        top: 67,
-        left: 5,
-        id: 4,
-        isFree: true,
-        number: ''
-    },
-    {
-        top: 67,
-        left: 67,
-        id: 5,
-        isFree: true,
-        number: ''
-    },
-    {
-        top: 67,
-        left: 129,
-        id: 6,
-        isFree: true,
-        number: ''
-    },
-    {
-        top: 67,
-        left: 191,
-        id: 7,
-        isFree: true,
-        number: ''
-    },
-    {
-        top: 129,
-        left: 5,
-        id: 8,
-        isFree: true,
-        number: ''
-    },
-    {
-        top: 129,
-        left: 67,
-        id: 9,
-        isFree: true,
-        number: ''
-    },
-    {
-        top: 129,
-        left: 129,
-        id: 10,
-        isFree: true,
-        number: ''
-    },
-    {
-        top: 129,
-        left: 191,
-        id: 11,
-        isFree: true,
-        number: ''
-    },
-    {
-        top: 191,
-        left: 5,
-        id: 12,
-        isFree: true,
-        number: ''
-    },
-    {
-        top: 191,
-        left: 67,
-        id: 13,
-        isFree: true,
-        number: ''
-    },
-    {
-        top: 191,
-        left: 129,
-        id: 14,
-        isFree: true,
-        number: ''
-    },
-    {
-        top: 191,
-        left: 191,
-        id: 15,
-        isFree: true,
-        number: ''
+const n = 4;
+let cellsData = [];
+let cellsDataCreation = function(n) {
+    for (let i = 0; i < n*n; i++) {
+        cellsData.push(0)
     }
-];
-export {cellsData};
+    return cellsData;
+}
+cellsDataCreation(n);
+//Разбиваю  поле на линии и столбцы
+let allLines = [];
+let allColumns = [];
+
+let createLinesArray = function(n) {    
+    for(let k = 0; k < n*n; k+=n) {
+        let line = [];
+        for(let i = k; i < k + n; i++) {
+            line.push(cellsData[i]);
+        }
+        allLines.push(line);
+    }
+    return allLines;
+}
+createLinesArray(n);
+
+let createColumnsArray = function (n) {
+    for (let k = 0; k < n; k++) {
+        let column = [];
+        for (let i = k; i < k + n*n; i+=n) {
+            column.push(cellsData[i]);
+        }
+        allColumns.push(column);
+    }
+    return allColumns;
+}
+createColumnsArray(n);
+
+export {cellsData, n};
