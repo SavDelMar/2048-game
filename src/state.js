@@ -1,5 +1,6 @@
-//Исходное поле
+
 const n = 4;
+//создаю исходное поле
 let cellsData = [];
 let cellsDataCreation = function(n) {
     for (let i = 0; i < n*n; i++) {
@@ -7,7 +8,7 @@ let cellsDataCreation = function(n) {
     }
     return cellsData;
 }
-cellsDataCreation(n);
+
 //Разбиваю  поле на линии и столбцы
 let allLines = [];
 let allColumns = [];
@@ -36,4 +37,4 @@ let createColumnsArray = function (n) {
 }
 createColumnsArray(n);
 
-export {cellsData, n};
+export {cellsData, allLines, allColumns, n};

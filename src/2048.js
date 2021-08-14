@@ -2,8 +2,8 @@ import './styles/2048.css';
 import { cleanField } from './restart-game2048';
 import { shift, score } from './shifts';
 import { createNewRedCell, cellColorChange } from './new-cell-creation';
-import { cellsData } from './state';
-import { touchStartHandler, touchMoveHandler, touchEndHandler} from './mobile-events.js';
+import { cellsData, allLines, allColumns, n } from './state';
+import { touchStartHandler, touchMoveHandler, touchEndHandler } from './mobile-events.js';
 
 //Маcсив заполненных ячеек
 let redCells = Array.from(document.querySelectorAll('.red-cell'));
@@ -11,15 +11,25 @@ let redCells = Array.from(document.querySelectorAll('.red-cell'));
 let gameDrive;
 
 let isMinGoal = false;   //???????????????????????????????7777
+let cellWidth = 62;
+let gap = 5;
 
-//массив свободных ячеек
-
-
+//Создаем начальные данные 
+let cellsData = [];
+debugger;
+cellsDataCreation(n);
+console.log(cellsData);
+//получаем массив свободных ячеек
 let freeCells = [];
-let createFreeCellsArray = function(cellsData) {
-    for(let i = 0; i < cellsData.length; i++){
+let createFreeCellsArray = function (cellsData) {
+    for (let i = 0; i < cellsData.length; i++) {
         if (cellsData[i] == 0) {
-            freeCells.push[({id: i, isFree: true})]
+            freeCells.push({
+                id: i,
+                isFree: true,
+                top: Math.trunc(i / n) * cellWidt + gap,
+                left: i % n * cellWidth + gap
+            })
         }
     }
     return freeCells;
@@ -36,8 +46,6 @@ let prevRedCellsValues = [];
 let prevRedCells = [];
 let newRedCells = [];
 let isEqual = false;
-
- 
 
 //Обновление всех данных
 let updateALLData = function () {
@@ -61,6 +69,7 @@ currentScore.textContent = ' ' + score;
 let stepsTotal = document.getElementById('steps');
 let steps = 0;
 stepsTotal.textContent = ' ' + steps;
+
 //Создание начальных рандомных игровых ячеек
 createNewRedCell(numbers[Math.floor(Math.random() * numbers.length)], freeCells[Math.floor(Math.random() * freeCells.length)]);
 freeCells = cellsData.filter(cell => cell.isFree == true);
@@ -329,7 +338,7 @@ document.addEventListener('keydown', function (evt) {
         prevRedCellsValues.push(redCells[i].textContent);
     }
 
-    if (evt.key === 'i' ) {
+    if (evt.key === 'i') {
         for (let l = 0; l < allLines.length; l++) {
             allLines[l] = shift(allLines[l], l);
             let redCellLine = redCells.filter(cell => (cell.id < 4 * (l + 1) && cell.id >= 4 * l));
@@ -344,7 +353,7 @@ document.addEventListener('keydown', function (evt) {
                     redCellLine[i].style.left = allLines[l][i].left + 'px';
                     cellColorChange(redCellLine[i], allLines[l][i].number);
                     redCellLine[i].textContent = allLines[l][i].number;
-                    if (allLines[l][i].number !== prevNum ) {
+                    if (allLines[l][i].number !== prevNum) {
                         redCellLine[i].style.animation = '';
                         redCellLine[i].style.animation = 'show-big 0.5s 1';
                     }
@@ -507,7 +516,7 @@ document.addEventListener('keydown', function (evt) {
         }, 300)
     }
 
-    for( let i = 0; i<redCells.length; i++ ) {
+    for (let i = 0; i < redCells.length; i++) {
         if (redCells[i].textContent == 2048 && isMinGoal == 1) {
             isMinGoal++;
             document.querySelector('.game-win').style.display = 'block';
