@@ -1,5 +1,10 @@
 
-let score = 0;
+let score = {
+    value: 0,
+    set setScoreValue (n) {
+        this.value = parseInt(n);
+    }
+}
 let nullDelete = function (array) {
     return array.filter(cell => cell > 0);
 }
@@ -11,8 +16,11 @@ let shift = function (array, n, direction) {
     array = nullDelete(array);
     for (let i = 0; i < n - 1; i++) {
         if (array[i] == array[i + 1]) {
-            array[i] = 2 * parseInt(array[i]);
-            score = score + parseInt(array[i]);
+            array[i] = 2 * array[i];
+            if (array[i] > 0) {
+                score.setScoreValue = `${score.value + array[i]}`;
+                console.log(score.value)
+            }
             array[i+1] = 0;
         }
     }
@@ -20,7 +28,7 @@ let shift = function (array, n, direction) {
     array = nullDelete(array);
 
     for (let i = 0; i < n; i++) {
-        if (!array[i]) { 
+        if (!array[i]) {
             array.push(0)
         }
     }

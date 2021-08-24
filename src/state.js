@@ -1,40 +1,36 @@
 
 const n = 4;
 //создаю исходное поле
-let cellsData = [];
-let cellsDataCreation = function(n) {
+let cellsDataCreation = function(n, array) {
     for (let i = 0; i < n*n; i++) {
-        cellsData.push(0)
+        array.push(0)
     }
-    return cellsData;
+    return array;
 }
 
 //Разбиваю  поле на линии и столбцы
-let allLines = [];
-let allColumns = [];
 
-let createLinesArray = function(n) {    
-    for(let k = 0; k < n*n; k+=n) {
+
+let createLinesArray = function(n, array, linesArray) {
+    for (let k = 0; k < n * n; k += n) {
         let line = [];
         for(let i = k; i < k + n; i++) {
-            line.push(cellsData[i]);
+            line.push(array[i]);
         }
-        allLines.push(line);
+        linesArray.push(line);
     }
-    return allLines;
+    return linesArray;
 }
-createLinesArray(n);
 
-let createColumnsArray = function (n) {
+let createColumnsArray = function (n, array, columnsArray) {
     for (let k = 0; k < n; k++) {
         let column = [];
         for (let i = k; i < k + n*n; i+=n) {
-            column.push(cellsData[i]);
+            column.push(array[i]);
         }
-        allColumns.push(column);
+        columnsArray.push(column);
     }
-    return allColumns;
+    return columnsArray;
 }
-createColumnsArray(n);
 
-export {cellsData, allLines, allColumns, n};
+export { cellsDataCreation, createColumnsArray, createLinesArray, n};

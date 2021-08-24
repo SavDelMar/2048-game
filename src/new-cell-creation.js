@@ -1,9 +1,10 @@
-//Создание новой игровой ячейки
+import { cellsData } from './2048';
+    //Создание новой игровой ячейки
 let gameField = document.getElementById('game-field');
 let redCellTemplate = document.querySelector('#red-cell-template').content;
 let newRedCellTemplate = redCellTemplate.querySelector('.red-cell');
 
-//Изменение цвета ячейки при смене номинала. надо добавить LESS 
+//Изменение цвета ячейки при смене номинала. надо добавить LESS
 
 let cellColorChange = function (cell, textNumber) {
     if (textNumber == 2) {
@@ -56,13 +57,13 @@ let createNewRedCell = function (number, currentCell) {
     newRedCell.textContent = number;
     newRedCell.style.top = currentCell.top + 'px';
     newRedCell.style.left = currentCell.left + 'px';
-    newRedCell.id = currenCellt.id;
+    newRedCell.id = currentCell.id;
     currentCell.isFree = false;
     currentCell.number = number;
     currentCell.number = newRedCell.textContent;
     cellColorChange(newRedCell, number);
     gameField.appendChild(newRedCell);
     console.log(newRedCell.id);
-
+    cellsData.s = `${currentCell.id} ${number}` ;
 }
 export {createNewRedCell, cellColorChange};
