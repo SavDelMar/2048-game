@@ -21,16 +21,16 @@ let touchEndHandler = function (e) {
     
     if (Math.abs(xMove - xStart) > Math.abs(yMove - yStart)) {
         if (xMove - xStart > 0) {
-            direction = 'r';
+            direction = 'right';
         } else {
-            direction = 'l';
+            direction = 'left';
 
         }
     } else {
         if (yMove - yStart > 0) {
-            direction = 'd';
+            direction = 'down';
         } else {
-            direction = 'u';
+            direction = 'up';
         }
     }
         gameDrive(direction)

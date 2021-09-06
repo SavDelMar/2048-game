@@ -1,62 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/icon.png" />
     <link rel="stylesheet" href="./styles/2048.css">
+    <link href="//cdn.muicss.com/mui-latest/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="//cdn.muicss.com/mui-latest/js/mui.min.js"></script>
     <title>2048 - best time-killer ever</title>
-    
+
 
 </head>
+
 <body>
-    <div class='logo'></div>
-    <form>
-        <div class='myname'>
-            <label for='user-name'>Назовитесь</label>
-            <input class='text' type="text" id="user-name" placeholder="Моё имя...">
+    <div class='container'>
+
+        <div class='logo'></div>
+        <form>
+                <label for='user-name'>Моё имя</label>
+                <input class='user-name' type="text" id="user-name" value="" required placeholder="...">
+                <button type="submit"  class='send-button'>Внести мой результат в турнирную таблицу</button>
+
+        </form>
+        <p class='score'>
+            <span>Текущий счет:</span><span id='current-score'></span>
+            <span class='best-score'>Лучший результат:</span><span id='best-score'></span>
+            <span class='steps'>Шаги:</span><span id='steps'></span>
+        </p>
+
+        <div id="game-field">
+            <div class='cell'></div>
+            <div class='cell'></div>
+            <div class='cell'></div>
+            <div class='cell'></div>
+            <div class='cell'></div>
+            <div class='cell'></div>
+            <div class='cell'></div>
+            <div class='cell'></div>
+            <div class='cell'></div>
+            <div class='cell'></div>
+            <div class='cell'></div>
+            <div class='cell'></div>
+            <div class='cell'></div>
+            <div class='cell'></div>
+            <div class='cell'></div>
+            <div class='cell'></div>
+            <div class='game-over'>
+                ИГРА окончена!
+            </div>
+            <div class='game-win'>
+                Победа!
+                <button class='continue-button' value='Продолжить'>Хочу большего!</button>
+            </div>
+            <template id="initial-cell-template">
+                <div class='cell'></div>
+            </template>
+            <template id="red-cell-template">
+                <div class='red-cell'></div>
+            </template>
         </div>
-        <button type="submit" class='send-button'>Внести мой результат в турнирную таблицу</button>
-    </form>
-    <p class='score'>
-        <span>Текущий счет:</span><span id='current-score'></span>
-        <span class='best-score'>Лучший результат:</span>
-        <span class='steps'>Шаги:</span><span id='steps'></span>
-    </p>
-    <div id="game-field">
-        <div class='cell'></div>
-        <div class='cell'></div>
-        <div class='cell'></div>
-        <div class='cell'></div>
-        <div class='cell'></div>
-        <div class='cell'></div>
-        <div class='cell'></div>
-        <div class='cell'></div>
-        <div class='cell'></div>
-        <div class='cell'></div>
-        <div class='cell'></div>
-        <div class='cell'></div>
-        <div class='cell'></div>
-        <div class='cell'></div>
-        <div class='cell'></div>
-        <div class='cell'></div>
-        <div class='game-over'>
-            ИГРА окончена!
+
+        <div class='controls'>
+            <button class='return' value='Новая игра'>Шаг назад</button>
+            <button class='new-game' value='Новая игра'>Новая игра</button>
         </div>
-        <div class='game-win'>
-            Победа! 
-            <button class='continue-button' value='Продолжить'>Хочу большего!</button>
+        <button class="mui-btn mui-btn--fab all-results-btn">Турнирная<br>таблица</button>
+        <button class="mui-btn mui-btn--fab my-results-btn" id='my-results'>Мои<br>результаты</button>
+
+        <h3>Мои результаты</h2>
+        <div id='list'>
+            
         </div>
-        <template id="red-cell-template">
-            <div class='red-cell'></div>
-        </template>
     </div>
-    <div class='controls'>
-        <button class='return' value='Новая игра'>Шаг назад</button>
-        <button class='new-game' value='Новая игра'>Новая игра</button>
-    </div>
-    
+
     <script src="2048.js"></script>
 </body>
+
 </html>

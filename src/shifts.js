@@ -19,7 +19,6 @@ let shift = function (array, n, direction) {
             array[i] = 2 * array[i];
             if (array[i] > 0) {
                 score.setScoreValue = `${score.value + array[i]}`;
-                console.log(score.value)
             }
             array[i+1] = 0;
         }

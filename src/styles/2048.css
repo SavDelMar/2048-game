@@ -5,13 +5,21 @@
  margin: 0;
  padding: 0;
 }
-
+.container {
+    margin: auto;
+    text-align: center;
+}
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #fff;
-
 }
-
+#list {
+    font-size: 14px;
+    height: auto;
+    width: 400px;
+    margin: auto;
+    background-color: rgb(224, 224, 233);
+}
 form {
     vertical-align: middle;
 }
@@ -27,14 +35,43 @@ form, h1, p {
     margin-left: 30px;
 }
 .send-button {
+    margin: 10px auto ;
     width: 200px;
     height: 40px;
     vertical-align: middle;
 }
+.all-results-btn, .my-results-btn {
+    position: fixed;
+    top: 50px;
+    right: 50px;
+    background-color: rgba(214, 124, 55, 0.7);
+    border-radius: 10px;
+    height: 100px;
+    width: 100px;
+    line-height: 20px;
+}
+.my-results-btn {
+    background-color: rgb(168, 164, 189);
+    top: 50px;
+    right: 170px;
+}
+.modal {
+    max-width: 600px;
+    max-height: 300px;
+    margin: 100px auto;
+    overflow-y: auto;
+    background: #fff;
+}
+.modal h1 {
+    text-align: center;
+}
+.modal-content {
+    font-size: 12px;
+    margin-left: 30px;
+}
 #game-field {
-
     position: relative;
-    margin: 30px auto;
+    margin: 30px auto 10px;
     padding: 5px;
     display: flex;
     flex-wrap: wrap;
@@ -50,9 +87,10 @@ form, h1, p {
     border-radius: 5px;
 }
 .new-game, .return {
-    margin-left: 30px;
+    margin: 15px;
+    height: 30px;
+    width: 15%;
 }
-
 .game-over, .game-win  {
     position: absolute;
     top: 0px;
@@ -102,8 +140,6 @@ form, h1, p {
     animation: show-big 0.4s 1;
     animation-fill-mode: forwards;
 }
-
-
 .red-cell {
     position: absolute;
     top: 67px;
@@ -122,11 +158,11 @@ form, h1, p {
     animation: show 0.4s 1; /* Указываем название анимации, её время и количество повторов*/
     animation-fill-mode: forwards; /* Чтобы элемент оставался в конечном состоянии анимации */
 }
-
 .logo {
+    position: center;
     background-image: url('../assets/icon.png');
     background-size: cover;
     height: 100px;
     width: 100px;
-    margin: 40px;
+    margin: 40px auto;
 }
