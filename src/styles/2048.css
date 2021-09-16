@@ -11,7 +11,7 @@
 }
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #fff;
+    background-color: rgb(255, 255, 255);
 }
 #list {
     font-size: 14px;
@@ -22,6 +22,10 @@ body {
 }
 form {
     vertical-align: middle;
+}
+#user-name {
+    height: 36px;
+    border-radius: 10px;
 }
 .text {
     height: 36px;
@@ -39,35 +43,43 @@ form, h1, p {
     width: 200px;
     height: 40px;
     vertical-align: middle;
+    border-radius: 10px;
+}
+.results-buttons {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    width: 40%;
 }
 .all-results-btn, .my-results-btn {
-    position: fixed;
-    top: 50px;
-    right: 50px;
-    background-color: rgba(214, 124, 55, 0.7);
-    border-radius: 10px;
-    height: 100px;
-    width: 100px;
-    line-height: 20px;
+    padding: 15px 5px;
+    background-color: rgba(214, 124, 55, 0.9);
+    font-size: 8px;
+    border-radius: 50%;
+    height: auto;
+    width: auto;
+    line-height: 15px;
 }
 .my-results-btn {
-    background-color: rgb(168, 164, 189);
-    top: 50px;
-    right: 170px;
+    background-color: rgba(168, 164, 189, 0.9);
 }
 .modal {
-    max-width: 600px;
-    max-height: 300px;
+    max-width: 400px;
     margin: 100px auto;
-    overflow-y: auto;
+    overflow-y: scroll;
     background: #fff;
+    border: 2px rgba(214, 124, 55, 0.9) solid;
+    background-color: rgb(243, 242, 247);
 }
+
 .modal h1 {
     text-align: center;
 }
 .modal-content {
-    font-size: 12px;
-    margin-left: 30px;
+    font-size: 14px;
+    margin: 30px;
+    text-align: center;
 }
 #game-field {
     position: relative;
@@ -84,11 +96,14 @@ form, h1, p {
 .continue-button {
     font-size: 15px;
     padding: 5px;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 .new-game, .return {
     margin: 15px;
-    height: 30px;
+    padding: 1%;
+    border-radius: 10px;
+    height: auto;
+    min-width: 98px;
     width: 15%;
 }
 .game-over, .game-win  {

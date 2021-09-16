@@ -13,16 +13,21 @@ export class Result {
                 return result;
             })
             .then(addToLocalStorage)
-            .then(Result.renderList)
+           // .then(Result.renderList)
     }
-    static renderList(){
+    /*static renderList(){
         const results = getResultsFromLocalStorage();
         const html = results.length
             ? results.map(toCard).join('')
             : `<div class='no-results-yet>У вас пока нет результатов. Вперед!</div>`
-            const list = document.getElementById('list');
-            list.innerHTML = html;
-    }
+        const list = document.getElementById('list');
+        list.innerHTML = html;
+    }*/
+}
+export async function getResultsFromDataBase() {
+    let response = await fetch('https://game-4584b-default-rtdb.firebaseio.com/results.json');
+    response = await response.json();
+    return response;
 }
 
 function addToLocalStorage(result) {
@@ -37,11 +42,8 @@ export function getResultsFromLocalStorage() {
 
 export function toCard(result) {
     return `
-        <div class='result-item'>
-            ${new Date(result.date).toLocaleDateString()}
-        </div>
         <div>
-            <span><pre>${result.user}:      ${result.res}</pre></span>
+            <span><pre>${new Date(result.date).toLocaleDateString()}         ${result.user}      ${result.res}</pre></span>
         </div>
         <br>
     `

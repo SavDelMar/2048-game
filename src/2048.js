@@ -5,18 +5,13 @@ import { createNewRedCell } from './new-cell-creation';
 import { cellsDataCreation, createColumnsArray, createLinesArray, n } from './state';
 import { touchStartHandler, touchMoveHandler, touchEndHandler } from './mobile-events.js';
 import { redCellMoveLeft, redCellMoveRight, redCellMoveUp, redCellMoveDown } from './redCellMove.js';
-import { getResultsFromLocalStorage, Result, toCard } from './results';
-import { createModal } from "./utils";
+import { Result } from './results';
+import { bestScoreShow, openAllResults, openMyResults } from './show-results';
 
 // просмотр моих результатов
 document.getElementById('my-results').addEventListener('click', openMyResults);
-function openMyResults() {
-    const results = getResultsFromLocalStorage();
-        const html = results.length
-            ? results.map(toCard).join('')
-            : `<div class='no-results-yet'>У вас пока нет результатов. Вперед!</div>`
-    createModal('Мои результаты', html)
-}
+//просмотр всех результатов
+document.getElementById('all-results').addEventListener('click', openAllResults);
 
 //Маcсив заполненных ячеек
 let redCells = Array.from(document.querySelectorAll('.red-cell'));
@@ -67,7 +62,7 @@ let newRedCells = [];
 let prevScore;
 let isEqual = false;
 
-//Обновление всех данныхß
+//Обновление всех данных
 let updateALLData = function () {
     allLines = [];
     allColumns = [];
@@ -84,7 +79,8 @@ currentScore.textContent = ' ' + score.value;
 let stepsTotal = document.getElementById('steps');
 let steps = 0;
 stepsTotal.textContent = ' ' + steps;
-
+let bestScore = document.getElementById('best-score');
+bestScoreShow(bestScore);
 //Создание начальных  2 рандомных игровых ячеек
 createNewRedCell(numbers[Math.floor(Math.random() * numbers.length)], freeCells[Math.floor(Math.random() * freeCells.length)]);
 freeCells = [];
@@ -135,11 +131,7 @@ document.querySelector('.send-button').addEventListener('click', function (e) {
         Result.create(userResult).then(() => {
             document.querySelector('.user-name').value = '';
         })
-        console.log(userResult);
-
     }
-
-
 })
 
 //Функционал Кнопки Продолжить
@@ -154,11 +146,9 @@ document.querySelector('.return').addEventListener('click', function () {
     for (let i = 0; i < redCells.length; i++) {      //очищаем state
         cellsData.cellsDataArray[redCells[i].id] = 0;
     }
-
     cleanField(redCells);
     freeCells = [];
     createFreeCellsArray(cellsData.cellsDataArray);
-
     for (let i = 0; i < prevRedCells.length; i++) {
         createNewRedCell(prevRedCellsValues[i], freeCells[prevRedCells[i]])
     }
@@ -275,13 +265,13 @@ document.addEventListener('keydown', function (evt) {
     prevScore = score.value;
 
     let directionMove = '';
-    if (evt.key === 'i' || evt.key === 'ArrowLeft') {
+    if (evt.key === 'ArrowLeft') {
         directionMove = 'left'
-    } else if (evt.key === 'p' || evt.key === 'ArrowRight') {
+    } else if ( evt.key === 'ArrowRight') {
         directionMove = 'right'
-    } else if (evt.key === 'o' || evt.key === 'ArrowUp') {
+    } else if ( evt.key === 'ArrowUp') {
         directionMove = 'up'
-    } else if (evt.key === 'l' || evt.key === 'ArrowDown') {
+    } else if (evt.key === 'ArrowDown') {
         directionMove = 'down'
     }
 
